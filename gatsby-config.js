@@ -1,8 +1,14 @@
+const dotenv = require('dotenv')
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config()
+}
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `TK Gatsby Default Starter `,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    author: `thomas k`,
+    createdAt: '2019',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -11,6 +17,25 @@ module.exports = {
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+   // `gatsby-transformer-remark`,
+   {
+     resolve: `gatsby-transformer-remark`,
+     options: {
+       plugins:
+       [
+         {
+           resolve: 'gatsby-remark-images'
+         }
+       ]
+     }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -31,4 +56,11 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
+},
+{
+  resolve: 'gatsby-source-contentful',
+  options: {
+    spaceId: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  },
 }
